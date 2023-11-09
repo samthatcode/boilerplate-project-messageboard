@@ -109,10 +109,17 @@ function assertionAnalyser(body) {
 
   var assertionBodies = [];
   var methods = assertions.map(function(a, i){
+    // var m = a.match(/^\s*\.\s*(\w+)__#(\d+)/);
+    // assertionBodies.push(parseInt(m[2]));
+    // var pre = splittedAssertions[i].match(/browser\s*\.\s*/) ? 'browser.' : '';
+    // return pre + m[1];
     var m = a.match(/^\s*\.\s*(\w+)__#(\d+)/);
-    assertionBodies.push(parseInt(m[2]));
-    var pre = splittedAssertions[i].match(/browser\s*\.\s*/) ? 'browser.' : '';
-    return pre + m[1];
+    if (m) {
+      assertionBodies.push(parseInt(m[2]));
+      var pre = splittedAssertions[i].match(/browser\s*\.\s*/) ? 'browser.' : '';
+      return pre + m[1];
+    }
+
   });
   if(methods.some(function(m){ return !m })) return "invalid assertion";
   // remove parens from the assertions bodies

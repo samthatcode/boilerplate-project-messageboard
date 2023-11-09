@@ -6,16 +6,34 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
+  // test('Creating a new thread', function(done) {
+  //   chai.request(server)
+  //     .post('/api/threads/test')
+  //     .send({ text: 'test thread', delete_password: 'pass' })
+  //     .end(function(err, res) {
+  //       assert.equal(res.status, 200);
+  //       // Add more assertions as needed
+  //       done();
+  //     });
+  // });
   test('Creating a new thread', function(done) {
     chai.request(server)
-      .post('/api/threads/test')
-      .send({ text: 'test thread', delete_password: 'pass' })
-      .end(function(err, res) {
+    .post('/api/threads/test')
+    .send({ text: 'test', delete_password: 'delete' })
+    .end(function(err, res) {
+      if (err) {
+        done(err);
+      } else {
         assert.equal(res.status, 200);
-        // Add more assertions as needed
+        // assert.property(res.body, 'text');
+        // assert.property(res.body, 'delete_password');
+        // assert.equal(res.body.text, 'test');
+        // assert.equal(res.body.delete_password, 'delete');
         done();
-      });
+      }
+    });
   });
+  
 
   test('Viewing the 10 most recent threads with 3 replies each', function(done) {
     chai.request(server)
